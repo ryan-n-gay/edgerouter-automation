@@ -5,6 +5,7 @@
     - ipsec_server
     - ad_block
     - dynamic_dns
+    - letsencrypt
 
 - hosts: er02
 
@@ -13,3 +14,4 @@
     - ipsec_server
     - ad_block
     - dynamic_dns
+    - letsencrypt
