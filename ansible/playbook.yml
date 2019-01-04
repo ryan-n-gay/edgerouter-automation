@@ -4,4 +4,12 @@
     # - wireguard_client
     - ipsec_server
     - ad_block
-    # - dynamic_dns
+    - dynamic_dns
+
+- hosts: er02
+
+  roles:
+    # - wireguard_client
+    - ipsec_server
+    - ad_block
+    - dynamic_dns

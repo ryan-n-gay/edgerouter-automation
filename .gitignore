@@ -213,3 +213,4 @@ venv.bak/
 
 
 # End of https://www.gitignore.io/api/python,visualstudiocode
+ansible/er02.yml
