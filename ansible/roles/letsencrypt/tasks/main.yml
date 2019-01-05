@@ -1,12 +1,30 @@
-- name: configure Let's Encrypt
+- name: Transfer letsencrypt_install.sh
+  copy:
+    src: letsencrypt_install.sh
+    dest: /config/scripts/letsencrypt_install.sh
+    mode: 0755
+  become: yes
+  vars:
+    ansible_connection: paramiko
+
+- name: Run Let's Encrypt script
+  command: /bin/vbash /config/scripts/letsencrypt_install.sh
+  become: yes
+  vars:
+    ansible_connection: paramiko
+
+- name: Configure SSL Settings
   edgeos_config:
     lines:
-      - curl https://raw.githubusercontent.com/j-c-m/ubnt-letsencrypt/master/install.sh | sudo bash
       - set system static-host-mapping host-name {{ ddns_host }} inet {{ ansible_host }}
       - set service gui cert-file /config/ssl/server.pem
       - set service gui ca-file /config/ssl/ca.pem
       - set system task-scheduler task renew.acme executable path /config/scripts/renew.acme.sh
       - set system task-scheduler task renew.acme interval 1d
       - set system task-scheduler task renew.acme executable arguments '-d {{ ddns_host }}'
-      - sudo bash
-      - sudo /config/scripts/renew.acme.sh -d {{ ddns_host }}
+
+- name: Starting Let's Encrypt Service
+  command: /bin/vbash /config/scripts/renew.acme.sh '-d {{ ddns_host }}'
+  become: yes
+  vars:
+    ansible_connection: paramiko
