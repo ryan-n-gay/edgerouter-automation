@@ -1,0 +1,12 @@
+- name: configure dnsmasq
+  edgeos_config:
+    lines:
+      - set service dhcp-server use-dnsmasq enable
+      - set system name-server {{ ansible_host }}
+      - set service dns forwarding name-server {{ ext_dns1 }}
+      - set service dns forwarding listen-on {{ lan_interface1 }}
+      - set service dns forwarding cache-size {{ cache_size }}
+      - set system domain-name {{ domain_name }}
+      - set service dhcp-server shared-network-name {{ network_name }} subnet {{ network_subnet1 }} domain-name {{ domain_name }}
+      - set service dhcp-server shared-network-name {{ network_name }} subnet {{ network_subnet1 }} static-mapping {{ device_name1 }} ip-address {{ device_ip1 }}
+set service dhcp-server shared-network-name Management subnet {{ network_subnet1 }} static-mapping {{ device_name1 }} mac-address {{ device_mac1 }}
