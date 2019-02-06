@@ -4,9 +4,13 @@ A set of Ansible roles to configure various features on Ubiquity EdgeRouter X se
 
 ## Features
 
-Below are the features that this playbook is capable of configuring on the EdgeRouter. 
+Below are the features that this playbook is capable of configuring on the EdgeRouter.
 
 ### AD Block
+
+### DNSmasq
+
+This Role will configure all of the settings need for DNSmasq on your EdgeRouter.This is will also issue the setting needed to set static mappings as well as create the DNS entries needed to easily access your network devices via DNS name instead of IP. This feature is also needed for the AD Block feature to work properly.
 
 ### Dynamic DNS
 
@@ -22,11 +26,12 @@ This Role will configure Let's Encrypt SSL on your device as well as block traff
 
 ### WireGuard
 
-This Role can be used to accomplish multiple items depending on your use case. In this case it is being used to create secured tunnels with and AWS instance. 
+This Role can be used to accomplish multiple items depending on your use case. In this case it is being used to create secured tunnels with and AWS instance.
 
 ## Running the playbook
+
 Committing configurations can take extra time on certain edgerouter models so ANSIBLE_PERSISTENT_COMMAND_TIMEOUT needs to be set to 30 seconds to not timeout while configuring the aws tunnels. I'm using ansible-vault to encrypt hosts.yml, so I keep the decrypt password in a file at ~/.vault_pw and run ansible-playbook with --vault-password-file.
 
-```
+```text
 ANSIBLE_PERSISTENT_COMMAND_TIMEOUT=30 ansible-playbook playbook.yml -i hosts.yml --vault-password-file ~/.vault_pw
 ```
